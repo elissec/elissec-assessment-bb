@@ -1,19 +1,51 @@
 package questions;
 
 import com.opencsv.CSVReader;
+
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 public class Test1 {
-    public static CSVReader readCsvData(String strFilePath) {
-        //Read files and return a CSVReader object.
+
+    public static String strTest1Result = null;
+
+    public static List<HashMap<String, String>> readCsvData() throws Exception {
+        //Read files by using a CSVReader object
+        List<HashMap<String, String>> lstItemList = new ArrayList<>();
+        String csvFile = System.getProperty("user.dir") + "/src/main/resources/productData.csv";
+
         try {
-            FileReader filereader = new FileReader(strFilePath);
-            CSVReader csvFile = new CSVReader(filereader);
-            csvFile.skip(1); // Skip the header row
-            return csvFile;
-        } catch (Exception e) {
+            HashMap<String, String> mapProductDetails = new HashMap<>();
+            String[] strNextRecord;
+
+            FileReader filereader = new FileReader(csvFile);
+            CSVReader csvData = new CSVReader(filereader);
+            csvData.skip(1);
+
+            while ((strNextRecord = csvData.readNext()) != null) {
+
+                for (String data : strNextRecord) {
+                    mapProductDetails.put("ProductName", strNextRecord[0]);
+                    mapProductDetails.put("Price", strNextRecord[1]);
+                    mapProductDetails.put("Category", strNextRecord[2]);
+                    mapProductDetails.put("InStock", strNextRecord[3]);
+                }
+                lstItemList.add(new HashMap<>(mapProductDetails));
+            }
+        } catch (IOException e) {
             System.out.println("An error was encountered while trying to read the file: " + e.getLocalizedMessage());
             return null;
         }
+
+        System.out.println("CSV Data read successfully. Original data as follows: ");
+        for (HashMap<String, String> item : lstItemList) {
+            System.out.println("Product: " + item.get("ProductName") + " | Price: " + item.get("Price") +
+                    " | Category: " + item.get("Category") + " | In Stock: " + item.get("InStock"));
+        }
+
+        return lstItemList;
     }
 }

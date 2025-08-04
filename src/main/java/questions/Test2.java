@@ -8,9 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Test2 {
-    public static List<HashMap<String, String>> printExpensiveProducts(CSVReader csvProducts) throws IOException {
+    public static void printExpensiveProducts(List<HashMap<String, String>> lstProducts) {
         try {
-            List<HashMap<String, String>> lstItemList = new ArrayList<>();
             List<HashMap<String, String>> lstCategoryHome = new ArrayList<>();
             List<HashMap<String, String>> lstCategoryElectronic = new ArrayList<>();
             List<HashMap<String, String>> lstCategoryFurniture = new ArrayList<>();
@@ -18,42 +17,36 @@ public class Test2 {
             int intElectronicsCount = 0;
             int intFurnitureCount = 0;
 
-            HashMap<String, String> mapProductDetails = new HashMap<>();
-            String[] strNextRecord;
+            System.out.println("------------ Products with Price Greater than 100 and In Stock ------------");
+            for (int i = 0; i < lstProducts.size(); i++) {
 
-            while ((strNextRecord = csvProducts.readNext()) != null) {
-
-                for (String data : strNextRecord) {
-                    mapProductDetails.put("ProductName", strNextRecord[0]);
-                    mapProductDetails.put("Price", strNextRecord[1]);
-                    mapProductDetails.put("Category", strNextRecord[2]);
-                    mapProductDetails.put("InStock", strNextRecord[3]);
-                }
-                lstItemList.add(new HashMap<>(mapProductDetails));
-
-                if (mapProductDetails.get("InStock").equals("true") && // Get products that are in stock
-                        Integer.parseInt(mapProductDetails.get("Price")) > 100) { // and if the price is greater than 100
+                if (lstProducts.get(i).get("InStock").equals("true") && // Get products that are in stock
+                        Integer.parseInt(lstProducts.get(i).get("Price")) > 100) { // and if the price is greater than 100
                     // Print relevant products
-                    System.out.println("Available product: " + mapProductDetails.get("ProductName") +
-                            " | price: " + mapProductDetails.get("Price") + " | category: " + mapProductDetails.get("Category"));
+                    System.out.println("Available product: " + lstProducts.get(i).get("ProductName") +
+                            " | price: " + lstProducts.get(i).get("Price") + " | category: " + lstProducts.get(i).get("Category"));
                 }
+            }
 
-                switch (mapProductDetails.get("Category")) {
+            for (HashMap<String, String> lstProduct : lstProducts) {
+
+                switch (lstProduct.get("Category")) {
                     case "Electronics":
                         intElectronicsCount++;
-                        lstCategoryElectronic.add(new HashMap<>(mapProductDetails));
+                        lstCategoryElectronic.add(new HashMap<>(lstProduct));
                         break;
                     case "Home":
                         intHomeCount++;
-                        lstCategoryHome.add(new HashMap<>(mapProductDetails));
+                        lstCategoryHome.add(new HashMap<>(lstProduct));
                         break;
                     case "Furniture":
                         intFurnitureCount++;
-                        lstCategoryFurniture.add(new HashMap<>(mapProductDetails));
+                        lstCategoryFurniture.add(new HashMap<>(lstProduct));
                         break;
                 }
-
             }
+
+
 
             System.out.println();
             System.out.println("------------ Electronics Category Available: " + intElectronicsCount + " ------------");
@@ -79,14 +72,11 @@ public class Test2 {
                         "\n \t Price: " + lstCategoryFurniture.get(i).get("Price") +
                         "\n \t InStock: " + lstCategoryFurniture.get(i).get("InStock"));
             }
-            return lstItemList;
+
         } catch (Exception e) {
             System.out.println("An error was encountered while trying to group the products: " + e.getLocalizedMessage());
-            return null;
-        } finally {
-            if (csvProducts != null) { // Close CSV Reader after all tests.
-                csvProducts.close();
-            }
+
         }
+
     }
 }
