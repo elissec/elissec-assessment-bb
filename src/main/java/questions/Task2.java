@@ -4,15 +4,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Test2 {
+public class Task2 {
 
     public static String strTest2Result = "";
 
-    public static void printExpensiveProducts(List<HashMap<String, String>> lstProducts) {
+    public static void printExpensiveProducts(List<HashMap<String, String>> lstProducts, int intPriceThreshold) {
         try {
             strTest2Result += "------------ Products with Price Greater than 100 and In Stock ------------\r\n";
             for (int i = 0; i < lstProducts.size(); i++) {
-
                 if (lstProducts.get(i).get("InStock").equals("true") && // Get products that are in stock
                         Integer.parseInt(lstProducts.get(i).get("Price")) > 100) { // and if the price is greater than 100
                     // Print relevant products
@@ -24,9 +23,9 @@ public class Test2 {
             // Group products by category
             HashMap<String, List<HashMap<String, String>>> categoryMap = new HashMap<>();
             for (HashMap<String, String> product : lstProducts) {
-                String category = product.get("Category");
-                categoryMap.putIfAbsent(category, new ArrayList<>());
-                categoryMap.get(category).add(product);
+                String strCategory = product.get("Category");
+                categoryMap.putIfAbsent(strCategory, new ArrayList<>());
+                categoryMap.get(strCategory).add(product);
             }
 
             // Sort categories by the number of products in descending order
@@ -34,24 +33,26 @@ public class Test2 {
             for (int i = 0; i < sortedCategories.size() - 1; i++) {
                 for (int j = i + 1; j < sortedCategories.size(); j++) {
                     if (categoryMap.get(sortedCategories.get(i)).size() < categoryMap.get(sortedCategories.get(j)).size()) {
-                        String temp = sortedCategories.get(i);
+                        String strTemp = sortedCategories.get(i);
                         sortedCategories.set(i, sortedCategories.get(j));
-                        sortedCategories.set(j, temp);
+                        sortedCategories.set(j, strTemp);
                     }
                 }
             }
 
             // Print all products after grouping per category
             for (int i = 0; i < sortedCategories.size(); i++) {
-                String category = sortedCategories.get(i);
-                List<HashMap<String, String>> products = categoryMap.get(category);
-                strTest2Result += "------------ Category: " + category + " (" + products.size() + ") ------------\r\n";
-                for (int k = 0; k < products.size(); k++) {
-                    HashMap<String, String> product = products.get(k);
-                    strTest2Result += "Product " + (k + 1) + ": " +
-                            "\n \t ProductName: " + product.get("ProductName") +
-                            "\n \t Price: " + product.get("Price") +
-                            "\n \t InStock: " + product.get("InStock") + "\r\n";
+                String strCategory = sortedCategories.get(i);
+                List<HashMap<String, String>> lstSortedProducts = categoryMap.get(strCategory);
+                strTest2Result += "------------ Category: " + strCategory + " (" + lstSortedProducts.size() + ") ------------\r\n";
+                for (int k = 0; k < lstSortedProducts.size(); k++) {
+                    HashMap<String, String> mapProducts = lstSortedProducts.get(k);
+                    if(Integer.parseInt(mapProducts.get("Price")) > intPriceThreshold) { // Bonus question to support filtering products by price threshold
+                        strTest2Result += "Product " + (k + 1) + ": " +
+                                "\n \t ProductName: " + mapProducts.get("ProductName") +
+                                "\n \t Price: " + mapProducts.get("Price") +
+                                "\n \t InStock: " + mapProducts.get("InStock") + "\r\n";
+                    }
                 }
             }
 

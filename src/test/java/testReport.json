@@ -1,0 +1,35 @@
+{
+[  "Test1": "Product: Laptop | Price: 1500 | Category: Electronics | In Stock: true\nProduct: Keyboard | Price: 50 | Category: Electronics | In Stock: true\nProduct: Coffee Mug | Price: 12 | Category: Home | In Stock: false\nProduct: Chair | Price: 80 | Category: Furniture | In Stock: true\nProduct: Monitor | Price: 220 | Category: Electronics | In Stock: true\nProduct: Cellphone | Price: 1650 | Category: Gadgets | In Stock: false\nProduct: Android | Price: 10 | Category: Gadgets | In Stock: true\nProduct: Table | Price: 300 | Category: Furniture | In Stock: false\nProduct: Headphones | Price: 101 | Category: Electronics | In Stock: true\nProduct: Cast Iron Pan | Price: 999 | Category: Home | In Stock: true\n",
+  "Test2": "------------ Products with Price Greater than 100 and In Stock ------------\nAvailable product: Laptop | price: 1500 | category: Electronics\nAvailable product: Monitor | price: 220 | category: Electronics\nAvailable product: Headphones | price: 101 | category: Electronics\nAvailable product: Cast Iron Pan | price: 999 | category: Home\n------------ Category: Electronics (4) ------------\nProduct 1: 
+ 	 ProductName: Laptop
+ 	 Price: 1500
+ 	 InStock: true\nProduct 2: 
+ 	 ProductName: Keyboard
+ 	 Price: 50
+ 	 InStock: true\nProduct 3: 
+ 	 ProductName: Monitor
+ 	 Price: 220
+ 	 InStock: true\nProduct 4: 
+ 	 ProductName: Headphones
+ 	 Price: 101
+ 	 InStock: true\n------------ Category: Gadgets (2) ------------\nProduct 1: 
+ 	 ProductName: Cellphone
+ 	 Price: 1650
+ 	 InStock: false\nProduct 2: 
+ 	 ProductName: Android
+ 	 Price: 10
+ 	 InStock: true\n------------ Category: Furniture (2) ------------\nProduct 1: 
+ 	 ProductName: Chair
+ 	 Price: 80
+ 	 InStock: true\nProduct 2: 
+ 	 ProductName: Table
+ 	 Price: 300
+ 	 InStock: false\n------------ Category: Home (2) ------------\nProduct 1: 
+ 	 ProductName: Coffee Mug
+ 	 Price: 12
+ 	 InStock: false\nProduct 2: 
+ 	 ProductName: Cast Iron Pan
+ 	 Price: 999
+ 	 InStock: true\n",
+  "Test3": "------------ Sorted Item List by Price (High to Low) ------------\nCellphone | Price: 1650 | Category: Gadgets | InStock: false\nLaptop | Price: 1500 | Category: Electronics | InStock: true\nCast Iron Pan | Price: 999 | Category: Home | InStock: true\nTable | Price: 300 | Category: Furniture | InStock: false\nMonitor | Price: 220 | Category: Electronics | InStock: true\nHeadphones | Price: 101 | Category: Electronics | InStock: true\nChair | Price: 80 | Category: Furniture | InStock: true\nKeyboard | Price: 50 | Category: Electronics | InStock: true\nCoffee Mug | Price: 12 | Category: Home | InStock: false\nAndroid | Price: 10 | Category: Gadgets | InStock: true\n"
+]}
