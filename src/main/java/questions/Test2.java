@@ -1,76 +1,58 @@
 package questions;
 
-import com.opencsv.CSVReader;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Test2 {
+
+    public static String strTest2Result = "";
+
     public static void printExpensiveProducts(List<HashMap<String, String>> lstProducts) {
         try {
-            List<HashMap<String, String>> lstCategoryHome = new ArrayList<>();
-            List<HashMap<String, String>> lstCategoryElectronic = new ArrayList<>();
-            List<HashMap<String, String>> lstCategoryFurniture = new ArrayList<>();
-            int intHomeCount = 0;
-            int intElectronicsCount = 0;
-            int intFurnitureCount = 0;
-
-            System.out.println("------------ Products with Price Greater than 100 and In Stock ------------");
+            strTest2Result += "------------ Products with Price Greater than 100 and In Stock ------------\r\n";
             for (int i = 0; i < lstProducts.size(); i++) {
 
                 if (lstProducts.get(i).get("InStock").equals("true") && // Get products that are in stock
                         Integer.parseInt(lstProducts.get(i).get("Price")) > 100) { // and if the price is greater than 100
                     // Print relevant products
-                    System.out.println("Available product: " + lstProducts.get(i).get("ProductName") +
-                            " | price: " + lstProducts.get(i).get("Price") + " | category: " + lstProducts.get(i).get("Category"));
+                    strTest2Result += "Available product: " + lstProducts.get(i).get("ProductName") +
+                            " | price: " + lstProducts.get(i).get("Price") + " | category: " + lstProducts.get(i).get("Category") + "\r\n";
                 }
             }
 
-            for (HashMap<String, String> lstProduct : lstProducts) {
+            // Group products by category
+            HashMap<String, List<HashMap<String, String>>> categoryMap = new HashMap<>();
+            for (HashMap<String, String> product : lstProducts) {
+                String category = product.get("Category");
+                categoryMap.putIfAbsent(category, new ArrayList<>());
+                categoryMap.get(category).add(product);
+            }
 
-                switch (lstProduct.get("Category")) {
-                    case "Electronics":
-                        intElectronicsCount++;
-                        lstCategoryElectronic.add(new HashMap<>(lstProduct));
-                        break;
-                    case "Home":
-                        intHomeCount++;
-                        lstCategoryHome.add(new HashMap<>(lstProduct));
-                        break;
-                    case "Furniture":
-                        intFurnitureCount++;
-                        lstCategoryFurniture.add(new HashMap<>(lstProduct));
-                        break;
+            // Sort categories by the number of products in descending order
+            List<String> sortedCategories = new ArrayList<>(categoryMap.keySet());
+            for (int i = 0; i < sortedCategories.size() - 1; i++) {
+                for (int j = i + 1; j < sortedCategories.size(); j++) {
+                    if (categoryMap.get(sortedCategories.get(i)).size() < categoryMap.get(sortedCategories.get(j)).size()) {
+                        String temp = sortedCategories.get(i);
+                        sortedCategories.set(i, sortedCategories.get(j));
+                        sortedCategories.set(j, temp);
+                    }
                 }
             }
 
-
-
-            System.out.println();
-            System.out.println("------------ Electronics Category Available: " + intElectronicsCount + " ------------");
-            for (int i = 0; i < lstCategoryElectronic.size(); i++) {
-                System.out.println("Electronics Category Product " + (i + 1) + ": " +
-                        "\n \t ProductName: " + lstCategoryElectronic.get(i).get("ProductName") +
-                        "\n \t Price: " + lstCategoryElectronic.get(i).get("Price") +
-                        "\n \t InStock: " + lstCategoryElectronic.get(i).get("InStock"));
-            }
-
-            System.out.println("------------ Home Category Available: " + intHomeCount + " ------------");
-            for (int i = 0; i < lstCategoryHome.size(); i++) {
-                System.out.println("Home Category Product " + (i + 1) + ": " +
-                        "\n \t ProductName: " + lstCategoryHome.get(i).get("ProductName") +
-                        "\n \t Price: " + lstCategoryHome.get(i).get("Price") +
-                        "\n \t InStock: " + lstCategoryHome.get(i).get("InStock"));
-            }
-
-            System.out.println("------------ Furniture Category Available: " + intFurnitureCount + " ------------");
-            for (int i = 0; i < lstCategoryFurniture.size(); i++) {
-                System.out.println("Furniture Category Product " + (i + 1) + ": " +
-                        "\n \t ProductName: " + lstCategoryFurniture.get(i).get("ProductName") +
-                        "\n \t Price: " + lstCategoryFurniture.get(i).get("Price") +
-                        "\n \t InStock: " + lstCategoryFurniture.get(i).get("InStock"));
+            // Print all products after grouping per category
+            for (int i = 0; i < sortedCategories.size(); i++) {
+                String category = sortedCategories.get(i);
+                List<HashMap<String, String>> products = categoryMap.get(category);
+                strTest2Result += "------------ Category: " + category + " (" + products.size() + ") ------------\r\n";
+                for (int k = 0; k < products.size(); k++) {
+                    HashMap<String, String> product = products.get(k);
+                    strTest2Result += "Product " + (k + 1) + ": " +
+                            "\n \t ProductName: " + product.get("ProductName") +
+                            "\n \t Price: " + product.get("Price") +
+                            "\n \t InStock: " + product.get("InStock") + "\r\n";
+                }
             }
 
         } catch (Exception e) {

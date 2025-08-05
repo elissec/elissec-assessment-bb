@@ -10,7 +10,7 @@ import java.util.List;
 
 public class Test1 {
 
-    public static String strTest1Result = null;
+    public static String strTest1Result = "";
 
     public static List<HashMap<String, String>> readCsvData() throws Exception {
         //Read files by using a CSVReader object
@@ -40,10 +40,9 @@ public class Test1 {
             return null;
         }
 
-        System.out.println("CSV Data read successfully. Original data as follows: ");
         for (HashMap<String, String> item : lstItemList) {
-            System.out.println("Product: " + item.get("ProductName") + " | Price: " + item.get("Price") +
-                    " | Category: " + item.get("Category") + " | In Stock: " + item.get("InStock"));
+            strTest1Result += "Product: " + item.get("ProductName") + " | Price: " + item.get("Price") +
+                    " | Category: " + item.get("Category") + " | In Stock: " + item.get("InStock") + "\r\n";
         }
 
         return lstItemList;
