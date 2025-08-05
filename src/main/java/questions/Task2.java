@@ -32,6 +32,7 @@ public class Task2 {
             List<String> sortedCategories = new ArrayList<>(categoryMap.keySet());
             for (int i = 0; i < sortedCategories.size() - 1; i++) {
                 for (int j = i + 1; j < sortedCategories.size(); j++) {
+                    // Compare the size of the lists in the category map before sorting
                     if (categoryMap.get(sortedCategories.get(i)).size() < categoryMap.get(sortedCategories.get(j)).size()) {
                         String strTemp = sortedCategories.get(i);
                         sortedCategories.set(i, sortedCategories.get(j));
@@ -48,6 +49,7 @@ public class Task2 {
                 for (int k = 0; k < lstSortedProducts.size(); k++) {
                     HashMap<String, String> mapProducts = lstSortedProducts.get(k);
                     if(Integer.parseInt(mapProducts.get("Price")) > intPriceThreshold) { // Bonus question to support filtering products by price threshold
+                        // Concat sorted products to the test 2 results.
                         strTest2Result += "Product " + (k + 1) + ": " +
                                 "\n \t ProductName: " + mapProducts.get("ProductName") +
                                 "\n \t Price: " + mapProducts.get("Price") +

@@ -23,10 +23,10 @@ public class Task1 {
 
             FileReader filereader = new FileReader(csvFile);
             CSVReader csvData = new CSVReader(filereader);
-            csvData.skip(1);
+            csvData.skip(1); // Skip the header row
 
+            // Save product details in a hashmap to be used by other tests.
             while ((strNextRecord = csvData.readNext()) != null) {
-
                 for (String data : strNextRecord) {
                     mapProductDetails.put("ProductName", strNextRecord[0]);
                     mapProductDetails.put("Price", strNextRecord[1]);
@@ -40,6 +40,7 @@ public class Task1 {
             return null;
         }
 
+        // Concat 1st test results for reporting
         for (HashMap<String, String> item : lstItemList) {
             strTest1Result += "Product: " + item.get("ProductName") + " | Price: " + item.get("Price") +
                     " | Category: " + item.get("Category") + " | In Stock: " + item.get("InStock") + "\r\n";

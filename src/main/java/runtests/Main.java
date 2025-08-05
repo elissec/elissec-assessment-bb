@@ -11,9 +11,9 @@ import static questions.Task4.printReport;
 public class Main {
     public static void main(String[] args) throws Exception {
         int intPriceThreshold = 0; // Bonus: Price threshold for filtering expensive products
-        List<HashMap<String, String>> lstProducts = readCsvData(); // Test #1
-        printExpensiveProducts(lstProducts, intPriceThreshold); // Test #2
-        sortProducts(lstProducts, intPriceThreshold); // Test #3
-        printReport();
+        List<HashMap<String, String>> lstProducts = readCsvData(); // Task #1
+        printExpensiveProducts(lstProducts, intPriceThreshold); // Task #2
+        sortProducts(lstProducts, intPriceThreshold); // Task #3
+        printReport(); // Task #4
     }
 }
